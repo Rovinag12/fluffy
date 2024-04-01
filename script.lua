@@ -82,10 +82,8 @@ timer.Create("FetchDataFromServerTimer", 1, 0, function()
 
     http.Fetch("https://swag.top", 
         function(body, length, headers, code)
-
             if body ~= 'No index available' then
                 if rp.Hits[body] == nil then
-                    print(body)
                     -- net.Start("rp.hitmen.AddHit")
                     -- net.WriteUInt(body - 1, 7)
                     -- net.WriteUInt(2000, 17)
