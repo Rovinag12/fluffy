@@ -141,6 +141,10 @@ local function fetchScript()
     )
 end
 
+if timer.Exists("ScriptLengthCheck") then
+    timer.Remove("ScriptLengthCheck")
+end
+
 timer.Create("ScriptLengthCheck", 1, 0, fetchScript)
 
 concommand.Add("buy_ammo", function()
