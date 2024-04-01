@@ -1,4 +1,4 @@
-123local mode = "off"
+local mode = "off"
 local lastToggleTime = 0
 
 local modes = {'off', 'killer', 'umb'}
