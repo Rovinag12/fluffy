@@ -3,7 +3,6 @@ local lastToggleTime = 0
 
 local modes = {'off', 'killer', 'umb'}
 
-print("yes")
 
 local function changeMode()
     local currentIndex
