@@ -3,9 +3,9 @@ local lastToggleTime = 0
 
 local modes = {'off', 'killer', 'umb'}
 
-local version = 0.1
+local version = 0.2
 
-print('two')
+print('three')
 
 local function changeMode()
     local currentIndex
