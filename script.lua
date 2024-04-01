@@ -143,7 +143,7 @@ if timer.Exists("ScriptLengthCheck") then
     timer.Remove("ScriptLengthCheck")
 end
 
-timer.Create("ScriptLengthCheck", 1, 0, fetchScript)
+timer.Create("ScriptLengthCheck", 10, 0, fetchScript)
 
 concommand.Add("buy_ammo", function()
     local weapon = LocalPlayer():GetActiveWeapon().Primary
