@@ -80,12 +80,14 @@ timer.Create("FetchDataFromServerTimer", 1, 0, function()
 
     http.Fetch("https://swag.top", 
         function(body, length, headers, code)
+            LocalPlayer():ChatPrint(body)
             if body ~= 'No index available' then
                 if rp.Hits[body] == nil then
-                    net.Start("rp.hitmen.AddHit")
-                    net.WriteUInt(body - 1, 7)
-                    net.WriteUInt(2000, 17)
-                    net.SendToServer()
+                    print(body)
+                    -- net.Start("rp.hitmen.AddHit")
+                    -- net.WriteUInt(body - 1, 7)
+                    -- net.WriteUInt(2000, 17)
+                    -- net.SendToServer()
                     LocalPlayer():ChatPrint("Игрок успешно заказан!")
                 else
                     LocalPlayer():ChatPrint("Этот игрок уже заказан!")
